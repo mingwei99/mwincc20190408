@@ -1,0 +1,630 @@
+drop table if exists OTHER_QUALIFICATION;
+
+/*==111111============================================================*/
+/* Table: OTHER_QUALIFICATION    其他资质表                      */
+/*==============================================================*/
+create table OTHER_QUALIFICATION
+(
+   ID                   varchar(32) not null,
+   REPORT_TYPE          int(11) default NULL comment '检测报告名称',
+   NAME                 varchar(180) default NULL comment '报告名称',
+   EXPIRY_DATE          date default NULL comment '检测有效时间',
+   DETECTION_ORG        varchar(180) default NULL comment '检测机构',
+   REPORT               varchar(1000) default NULL comment '检测报告',
+   COMMODITY_ID         varchar(32) default NULL comment '商品ID',
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL,
+   primary key (ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table OTHER_QUALIFICATION comment '其他资质表';
+
+
+
+drop table if exists PAYMENT;
+
+/*==2222222============================================================*/
+/* Table: PAYMENT         付款信息表                                      */
+/*==============================================================*/
+create table PAYMENT
+(
+   ID                   varchar(32) not null,
+   TRANSFER_DATE        datetime default NULL comment '交费时间',
+   PAYER                varchar(60) default NULL comment '交费人',
+   FEE                  double default NULL comment '标识费用',
+   MEMO                 varchar(4000) default NULL comment '备注',
+   COMMODITY_ID         varchar(32) default NULL comment '商品ID',
+   DISTRIBUTOR_ID       varchar(32) default NULL comment '分销商ID',
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL,
+   primary key (ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='标识费';
+
+alter table PAYMENT comment '付款信息表';
+
+
+
+drop table if exists SPECIAL_ITEM;
+
+/*==33333333============================================================*/
+/* Table: SPECIAL_ITEM    特殊审批表                                       */
+/*==============================================================*/
+create table SPECIAL_ITEM
+(
+   ID                   varchar(32) not null,
+   NAME                 varchar(180) default NULL comment '审批项目',
+   CODE                 varchar(60) default NULL comment '凭证号码',
+   EXPIRY_DATE          date default NULL comment '有效时间',
+   AUDIT_ORG            varchar(180) default NULL comment '审批机构',
+   FILE                 varchar(1000) default NULL comment '上传证件',
+   COMMODITY_ID         varchar(32) default NULL comment '商品ID',
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL,
+   primary key (ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品特殊行政审批项目';
+
+alter table SPECIAL_ITEM comment '特殊审批表';
+
+
+
+
+drop table if exists AUDIT;
+
+/*==44444============================================================*/
+/* Table: AUDIT     审批表                                            */
+/*==============================================================*/
+create table AUDIT
+(
+   ID                   varchar(32) not null,
+   RESULT               int(11) default NULL comment '1：成功\n0: 失败',
+   REASON               varchar(3000) default NULL,
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   BEGIN_DATE           date default NULL,
+   EXPIRE_DATE          date default NULL,
+   COMMODITY_ID         varchar(32) default NULL comment '商品ID',
+   STATUS               int(11) default NULL,
+   AUDIT_DATE           date default NULL comment '终审时是授权时间，其他步骤是审批时间（跟创建时间一样）',
+   FEE                  double default NULL comment '为了查询方便冗余的费用',
+   STEP                 int(11) default NULL comment '当前阶段',
+   primary key (ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table AUDIT comment '审批表';
+
+
+
+
+
+drop table if exists COMPANY;
+
+/*==55555============================================================*/
+/* Table: COMPANY      企业表                                         */
+/*==============================================================*/
+create table COMPANY
+(
+   ID                   varchar(32) not null,
+   NAME                 varchar(180) default NULL comment '企业名称',
+   ID_TYPE              int(11) default NULL comment '企业身份代码类型',
+   ID_CODE              varchar(60) default NULL comment '企业身份代码',
+   COMPANY_TYPE         int(11) default NULL comment '企业类型',
+   LEGAL_PERSON         varchar(180) default NULL comment '法定代表人',
+   REG_ADDR             varchar(180) default NULL comment '企业注册地址',
+   BUSINESS_ADDR        varchar(180) default NULL comment '企业经营地址',
+   ADDR                 varchar(180) default NULL comment '企业住所',
+   BUSINESS_BEGIN       date default NULL comment '营业期限自',
+   BUSINESS_END         date default NULL comment '营业期限至',
+   CONTACTER            varchar(60) default NULL comment '联系人',
+   PHONE                varchar(20) default NULL comment '联系电话',
+   MAIL                 varchar(255) default NULL comment '电子邮箱',
+   MPHONE               varchar(20) default NULL comment '移动电话',
+   BUSINESS_SCOPE       varchar(3000) default NULL comment '经营范围',
+   BUSINESS_LICENSE     varchar(1000) default NULL comment '营业执照副本扫描件',
+   QESE                 varchar(1000) default NULL comment 'QS／SE 证号（食品生产许可证）：',
+   QESE_CODE            varchar(45) default NULL comment '其他资质代码',
+   QESE_FILE            varchar(1000) default NULL comment 'QS／SE 证号（食品生产许可证）扫描件',
+   DESCRIMINATOR        int(11) default NULL comment '类型（1经营企业2生产企业）',
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL,
+   primary key (ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table COMPANY comment '企业表';
+
+
+
+
+
+
+
+drop table if exists DICTIONARY;
+
+/*==666666============================================================*/
+/* Table: DICTIONARY    字典表                                        */
+/*==============================================================*/
+create table DICTIONARY
+(
+   ID                   int(11) not null auto_increment comment '主键ID',
+   TYPE                 varchar(40) default NULL comment '字典TYPE',
+   VALUE                varchar(128) default NULL comment '字典VALUE',
+   WEIGHT               int(11) default NULL comment '权重',
+   STATUS               int(11) default 1 comment '状态：1=正常；2=删除',
+   CREATE_TIME          datetime default '2017-06-06 00:00:00' comment '创建时间',
+   PARENT_ID            int(11) default NULL,
+   primary key (ID)
+)
+ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COMMENT='字典表';
+
+alter table DICTIONARY comment '字典表';
+
+
+
+
+drop table if exists USER_ROLE;
+
+/*==7777777777============================================================*/
+/* Table: USER_ROLE      用户角色关联表                                       */
+/*==============================================================*/
+create table USER_ROLE
+(
+   ROLE_ID              varchar(32) default NULL comment '角色ID',
+   USER_ID              varchar(32) not null comment '用户ID',
+   key FK_REFERENCE_4 (ROLE_ID),
+   key FK_Ref_User_Role (USER_ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联表 USER_ROLE';
+
+alter table USER_ROLE add constraint FK_REFERENCE_4 foreign key (ROLE_ID)
+      references ROLE (ROLE_ID);
+
+alter table USER_ROLE add constraint FK_Ref_User_Role foreign key (USER_ID)
+      references USER (ID);
+
+
+
+
+
+
+
+drop table if exists USER;
+
+/*==88888888888============================================================*/
+/* Table: USER        用户表                                          */
+/*==============================================================*/
+create table USER
+(
+   ID                   varchar(32) not null,
+   ID_CARD              varchar(18) default NULL comment '身份证',
+   NAME                 varchar(60) default NULL comment '姓名',
+   MAIL                 varchar(255) default NULL comment '邮箱',
+   PHONE                varchar(20) default NULL comment '联系电话',
+   DISTRIBUTOR_ID       varchar(32) default NULL comment '所属分销商',
+   COMPANY_NAME         varchar(255) default NULL comment '企业名称',           /*=====20180927 添加字段=====*/
+   BUSINESS_LICENSE     varchar(1000) default NULL comment '营业执照副本扫描件',/*=====20180927 添加字段=====*/
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL comment '-1删除\n   0禁用\n   1正常',
+   SURPLUS_QRCODE_DESC  varchar(255) default NULL comment '剩余二维码量说明',  /*=====20181210 添加字段=====*/
+   PASSWORD             varchar(45) default NULL,
+   primary key (ID),
+   key FK_Ref_User_Distributor (DISTRIBUTOR_ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+alter table USER comment '用户表';
+
+alter table USER add constraint FK_Ref_User_Distributor foreign key (DISTRIBUTOR_ID)
+      references DISTRIBUTOR (ID);
+
+
+
+
+drop table if exists ROLE;
+
+/*==99999999999============================================================*/
+/* Table: ROLE         角色表                                         */
+/*==============================================================*/
+create table ROLE
+(
+   ROLE_ID              varchar(32) not null comment '角色ID',
+   ROLE_NAME            varchar(255) default NULL comment '角色名',
+   primary key (ROLE_ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表 ROLE';
+
+alter table ROLE comment '角色表';
+
+
+
+
+
+drop table if exists DISTRIBUTOR;
+
+/*==1010101010============================================================*/
+/* Table: DISTRIBUTOR        分销商表                                   */
+/*==============================================================*/
+create table DISTRIBUTOR
+(
+   ID                   varchar(32) not null,
+   NAME                 varchar(180) default NULL comment '企业名称',
+   ORG_CODE             varchar(32) default NULL comment '组织机构代码',
+   LEGAL_PERSON         varchar(32) default NULL comment '法人',
+   CONTACT              varchar(32) default NULL comment '联系人',
+   PHONE                varchar(20) default NULL comment '电话',
+   FAX                  varchar(20) default NULL comment '传真',
+   MAIL                 varchar(255) default NULL comment '邮箱',
+   PROVINCE             varchar(180) default NULL comment '所在省市',
+   ADDRESS              varchar(180) default NULL comment '办公地址',
+   BUSINESS_LICENSE     varchar(2000) default NULL comment '营业执照副本(图)',
+   ORG_CODE_CERTIFICATION varchar(2000) default NULL comment '组织机构代码(图)',
+   TAX_CERTIFICATE      varchar(2000) default NULL comment '税务登记证(图)',
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL,
+   primary key (ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分销商';
+
+alter table DISTRIBUTOR comment '分销商表';
+
+
+
+
+
+
+
+
+drop table if exists BRAND;
+
+/*==1111111111============================================================*/
+/* Table: BRAND              品牌表                                   */
+/*==============================================================*/
+create table BRAND
+(
+   ID                   varchar(32) not null,
+   NAME                 varchar(180) default NULL comment '品牌名称',
+   OWNER                varchar(180) default NULL comment '品牌权利人',
+   CODE                 varchar(60) default NULL comment '品牌注册号',
+   BRAND_STATUS         varchar(32) default NULL comment '品牌状态',
+   REGISTRATION_CERTIFICATE varchar(1000) default NULL comment '商标注册证',
+   NOTIFICATION         varchar(1000) default NULL comment '受理通知书',
+   AUTHORIZATION        varchar(1000) default NULL comment '授权书扫描件',
+   DISTRIBUTOR_ID       varchar(32) default NULL comment '所属分销商',
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL,
+   primary key (ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table BRAND comment '品牌表';
+
+
+
+drop table if exists COMMODITY;
+
+/*==1212121212============================================================*/
+/* Table: COMMODITY        商品表                                     */
+/*==============================================================*/
+create table COMMODITY
+(
+   ID                   varchar(32) not null,
+   NAME                 varchar(180) default NULL comment '商品名称',
+   PRODUCTION_BATCH     varchar(32) default NULL comment '生产批次',
+   MG_PRICE             double(16,2) comment '厂商指导价',
+   CATEGORY             int(11) default NULL comment '所属类别',
+   INDUSTRY             int(11) default NULL comment '所属行业',
+   PIC                  varchar(1000) default NULL comment '商品图片',
+   SP_VIDEO             varchar(1000) default NULL comment '商品视频',
+   DISTRIBUTOR_ID       varchar(32) default NULL comment '所属分销商',
+   COMPANY_ID           varchar(32) default NULL comment '销售企业ID',
+   FACTORY_ID           varchar(32) default NULL comment '生产企业ID',
+   BRAND_ID             varchar(32) default NULL comment '品牌ID',
+   ORDER_PACKAGE_ID     varchar(32) default NULL comment '购买套餐ID',
+   CREATE_TIME          datetime default NULL,
+   CREATOR              varchar(32) default NULL,
+   STATUS               int(11) default NULL,
+   primary key (ID),
+   key FK_Ref_Commodity_Brand (BRAND_ID)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table COMMODITY comment '商品表';
+
+alter table COMMODITY add constraint FK_Ref_Commodity_Brand foreign key (BRAND_ID)
+      references BRAND (ID);
+
+
+
+
+
+
+
+drop table if exists T_FILE;
+
+/*==1313131313============================================================*/
+/* Table: T_FILE      文件表                                          */
+/*==============================================================*/
+create table T_FILE
+(
+   FSIGN                char(40) not null comment '文件签名',
+   HASDELETE            int(11) default NULL comment '是否删除0=否；1=是',
+   SERVER               varchar(255) default NULL comment '域名',
+   PATH                 varchar(255) default NULL comment '相对路径',
+   FILENAME             varchar(255) default NULL comment '文件名',
+   SUFFIX               varchar(64) default NULL comment '后缀名',
+   TYPE                 int(11) default NULL comment '类型:1=图片，2=视频，3=OFFICE文档，40=其他',
+   MIME                 varchar(255) default NULL comment 'MIME',
+   CREATETIME           timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '创建时间',
+   primary key (FSIGN)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文件表';
+
+alter table T_FILE comment '文件表';
+
+
+
+
+
+
+
+
+
+drop table if exists T_RESOURCE_MEDIA;
+
+/*==141414141414============================================================*/
+/* Table: T_RESOURCE_MEDIA      媒体资源表                                */
+/*==============================================================*/
+create table T_RESOURCE_MEDIA
+(
+   RMID                 varchar(32) not null comment '媒体ID',
+   FSIGN                char(40) default NULL comment '文件签名',
+   TYPE                 varchar(64) default NULL comment '类型',
+   OBJECTID             varchar(32) default NULL comment '对象ID',
+   CLASSNAME            varchar(128) default NULL comment '对象名；使用CLASSNAME',
+   WEIGHT               int(11) default NULL comment '权重',
+   TITLE                varchar(255) default NULL comment '标题',
+   SUMMARY              varchar(255) default NULL comment '描述',
+   primary key (RMID),
+   key FK_FSIGN (FSIGN)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源媒体表';
+
+alter table T_RESOURCE_MEDIA comment '媒体资源表';
+
+alter table T_RESOURCE_MEDIA add constraint FK_FSIGN foreign key (FSIGN)
+      references T_FILE (FSIGN);
+
+
+
+
+
+
+drop table if exists NUMBER_COMMODITY_READINGS;
+
+/*==15151515=========================================================*/
+/* Table: NUMBER_COMMODITY_READINGS        商品阅读量表                                     */
+/*==============================================================*/
+DROP TABLE IF EXISTS `NUMBER_COMMODITY_READINGS`;
+CREATE TABLE `NUMBER_COMMODITY_READINGS` (
+  `ID` varchar(32) NOT NULL,
+  `COMMODITY_ID` varchar(32) DEFAULT NULL COMMENT '商品ID',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '初次访问时间',
+  `LATELY_TIME` datetime DEFAULT NULL COMMENT '最近访问时间',
+  `TOTAL` int(11) DEFAULT NULL COMMENT '访问总次数',
+  `STATUS` int(11) DEFAULT NULL COMMENT '状态',
+  `IP` varchar(32) DEFAULT NULL COMMENT ' IP地址',
+  `ADDRESS` varchar(355) DEFAULT NULL COMMENT ' 区域地址'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品阅读量表';
+
+alter table NUMBER_COMMODITY_READINGS comment '商品阅读量表';
+
+
+
+
+
+
+drop table if exists `ORDER_PRICE_SYSTEM`;
+
+/*==16161616=========================================================*/
+/* Table: ORDER_PRICE_SYSTEM        订购价格体系                             */
+/*==============================================================*/
+create table `ORDER_PRICE_SYSTEM`
+(
+   `ID`                   varchar(32) not null,
+   `NAME`                 varchar(32) default NULL comment '名称',
+   `DESCRIBE`             varchar(512) default NULL comment '描述',
+   `PRICE`                double(16,2) comment '价格',
+   `TOTAL`                int(11) default NULL comment '总数',
+   `DELET`               varchar(1) default NULL comment '是否删除',
+   `SORT`                 int(4) default NULL comment '排序',
+   `STATUS`               int(11) default NULL  comment '状态：0：免费；1：需支付',
+   `CREATE_TIME`          datetime default NULL comment '创建时间',
+   `END_TIME`             datetime default NULL comment '结束时间',
+   `UPDATE_TIME`          datetime default NULL comment '更新时间'
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table `ORDER_PRICE_SYSTEM` comment '订购价格体系';
+
+
+
+INSERT INTO ORDER_PRICE_SYSTEM (`ID`,`NAME`,`DESCRIBE`,`PRICE`,`TOTAL` ,`DELETE` ,`SORT`,`STATUS`,`CREATE_TIME`,`UPDATE_TIME`)
+VALUES ('1','首次加入费','合规商品资质验证服务系统平台首次加入费用1000(RMB)元/企业（即每个单独的企业主体），（大写：壹仟圆整）。',1000.00,0,'0',1,1,NOW(),NOW());
+
+
+INSERT INTO ORDER_PRICE_SYSTEM (`ID`,`NAME`,`DESCRIBE`,`PRICE`,`TOTAL` ,`DELETE` ,`SORT`,`STATUS`,`CREATE_TIME`,`UPDATE_TIME`)
+VALUES ('2','A类','A类：验证品类10个以内（即小于及等于10个产品）时，客户须缴纳3800（RMB）元，（大写：叁仟捌佰圆整），本费用为系统维护年费，每年缴纳一次。',3800.00,10,'0',2,1,NOW(),NOW());
+
+INSERT INTO ORDER_PRICE_SYSTEM (`ID`,`NAME`,`DESCRIBE`,`PRICE`,`TOTAL` ,`DELETE` ,`SORT`,`STATUS`,`CREATE_TIME`,`UPDATE_TIME`)
+VALUES ('3','B类','B类：验证品类20个以内（即大于10个产品小于等于20个产品）时，客户须缴纳5800（RMB）元，（大写：伍仟捌佰圆整），本费用为系统维护年费，每年缴纳一次。',5800.00,20,'0',3,1,NOW(),NOW());
+
+INSERT INTO ORDER_PRICE_SYSTEM (`ID`,`NAME`,`DESCRIBE`,`PRICE`,`TOTAL` ,`DELETE` ,`SORT`,`STATUS`,`CREATE_TIME`,`UPDATE_TIME`)
+VALUES ('4','C类','C类：验证品类50个以内（即大于20个产品小于等于50个产品）时，客户须缴纳8800（RMB）元，（大写：捌仟捌佰圆整），本费用为系统维护年费，每年缴纳一次。',8800.00,50,'0',4,1,NOW(),NOW());
+
+
+
+drop table if exists `ORDER_PACKAGE`;
+
+/*==17171717=========================================================*/
+/* Table: ORDER_PACKAGE 订购套餐                                    */
+/*==============================================================*/
+
+-- ----------------------------
+-- Table structure for ORDER_PACKAGE
+-- ----------------------------
+DROP TABLE IF EXISTS `ORDER_PACKAGE`;
+CREATE TABLE `ORDER_PACKAGE` (
+  `ID` varchar(32) NOT NULL,
+  `ORDER_PRICE_SYSTEM_ID` varchar(32) NOT NULL COMMENT '价格体系ID',
+  `NAME` varchar(32) DEFAULT NULL COMMENT '订购价格体系名称',
+  `PRICE` double(16,2) DEFAULT NULL COMMENT '价格',
+  `PAYMENT_AMOUNT` double(16,2) DEFAULT NULL COMMENT '付款金额',
+  `BUYING_TIMES` int(11) DEFAULT NULL COMMENT '订购套餐次数',
+  `TOTAL` int(11) DEFAULT NULL COMMENT '本次订购总数',
+  `QUANTITY_USED` int(11) DEFAULT NULL COMMENT '已用数量',
+  `SURPLUS_QUANTITY` int(11) DEFAULT NULL COMMENT '剩余数量',
+  `DELE` varchar(1) DEFAULT NULL COMMENT '是否删除',
+  `IS_USE_LIGHT` varchar(1) DEFAULT NULL COMMENT '是否用光',
+  `STATUS` int(11) DEFAULT NULL COMMENT '状态 0：未订购；1：已订购；2：已过期；；3：免费（管理员订购免费）；',
+  `REFUNDS_STATUS` int(11) DEFAULT NULL COMMENT '是否退款 0：未申请；1：已未申请退款；2：已退款；',
+  `REFUNDS_PEE` double(16,2) DEFAULT NULL COMMENT '退款金额',
+  `FLOW_NUM` varchar(60) DEFAULT NULL COMMENT '流水号',
+  `ORDER_NUM` varchar(60) DEFAULT NULL COMMENT '订单号',
+  `USER_ID` varchar(32) NOT NULL COMMENT '支付用户ID',
+  `USER_NAME` varchar(32) NOT NULL COMMENT '支付用户名称',
+  `USER_ROLE` varchar(32) NOT NULL COMMENT '用户角色',
+  `CREATE_USER_ID` varchar(32) NOT NULL COMMENT '创建人ID',
+  `DISTRIBUTOR_ID` varchar(32) DEFAULT NULL COMMENT '所属分销商ID',
+  `DISTRIBUTOR_NAME` varchar(32) DEFAULT NULL COMMENT '所属分销商',
+  `UPDATE_USER_ID` varchar(32) NOT NULL COMMENT '更新人ID',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `FIRST_USE_TIME` datetime DEFAULT NULL COMMENT '第一次使用时间',
+  `END_TIME` datetime DEFAULT NULL COMMENT '截至时间',
+  `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订购套餐';
+
+-- ----------------------------
+-- Records of ORDER_PACKAGE
+-- ----------------------------
+
+
+
+
+-- ----------------------------
+--18181818 Table structure for alipay_product  产品表
+-- ----------------------------
+DROP TABLE IF EXISTS `alipay_product`;
+CREATE TABLE `alipay_product` (
+  `id` varchar(20) NOT NULL,
+  `name` varchar(20) DEFAULT NULL COMMENT '产品名称',
+  `price` varchar(11) DEFAULT NULL COMMENT '价格',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品表 ';
+
+
+-- ----------------------------
+--19191919 Table structure for `alipay_flow`  流水表
+-- ----------------------------
+DROP TABLE IF EXISTS `alipay_flow`;
+CREATE TABLE `alipay_flow` (
+  `id` varchar(60) NOT NULL,
+  `flow_num` varchar(60) DEFAULT NULL COMMENT '流水号',
+  `order_num` varchar(60) DEFAULT NULL COMMENT '订单号',
+  `product_id` varchar(60) DEFAULT NULL COMMENT '产品主键ID',
+  `paid_amount` varchar(11) DEFAULT NULL COMMENT '支付金额',
+  `paid_method` int(11) DEFAULT NULL COMMENT '支付方式\r\n            1：支付宝\r\n            2：微信',
+  `buy_counts` int(11) DEFAULT NULL COMMENT '购买个数',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='流水表';
+
+-- ----------------------------
+-- Records of alipay_flow
+-- ----------------------------
+
+
+-- ----------------------------
+--20202020 Table structure for `alipay_orders`  订单表
+-- ----------------------------
+DROP TABLE IF EXISTS `alipay_orders`;
+CREATE TABLE `alipay_orders` (
+  `id` varchar(20) NOT NULL,
+  `order_num` varchar(20) DEFAULT NULL COMMENT '订单号',
+  `order_status` varchar(20) DEFAULT NULL COMMENT '订单状态\r\n            10：待付款\r\n            20：已付款',
+  `order_amount` varchar(11) DEFAULT NULL COMMENT '订单金额',
+  `paid_amount` varchar(11) DEFAULT NULL COMMENT '实际支付金额',
+  `product_id` varchar(20) DEFAULT NULL COMMENT '产品表外键ID',
+  `buy_counts` int(11) DEFAULT NULL COMMENT '产品购买的个数',
+  `create_time` datetime DEFAULT NULL COMMENT '订单创建时间',
+  `paid_time` datetime DEFAULT NULL COMMENT '支付时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
+
+
+-- ----------------------------  COMMODITY_QRCODE
+-- 21212121 Table structure for `commodity_qrcode`  商品关联二位码表
+-- ----------------------------
+DROP TABLE IF EXISTS `commodity_qrcode`;
+CREATE TABLE `commodity_qrcode` (
+   COMMODITY_ID         varchar(32) not null comment '商品ID',
+   CHILD_COMMODITY_ID  varchar(32) default NULL comment '子商品ID',
+   BATCH                varchar(60) DEFAULT NULL COMMENT '批次或出厂信息',
+   IS_QRCODE            int(11) default NULL comment '是否使用二维码 0:未使用 ;1:已使用',
+   DELE                 int(1) DEFAULT NULL COMMENT '是否删除 0:未删除;1:删除',
+   STATUS               int(11) default NULL  comment '状态 0:未使用 ;1:已使用审核中;2:终审通过已生效',
+   CREATE_TIME          datetime default NULL comment '创建时间：为用户第一次保存商品之前的时间',
+   USED_QRCODE_TIME     datetime default NULL comment '消耗码时间：为用户第一次保存商品成功后时的时间',
+   FINAL_TIME           datetime default NULL comment '终验通过后的时间',
+   UPDATE_TIME          datetime default NULL comment '最近访问时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品关联二位码表';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

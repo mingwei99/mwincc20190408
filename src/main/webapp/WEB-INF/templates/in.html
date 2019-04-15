@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>capture screen</title>
+    <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            alert(1234445566);
+        });
+
+
+    </script>
+
+</head>
+<body onload="second()">
+
+                       <video id="ff_video" controls="controls"
+                              style="background-color: rgb(0, 0, 0); width: 100%; display: block;"
+                              webkit-playsinline=""
+                              x-webkit-airplay=""
+                              preload="auto"
+                              data-role="txp_video_tag"
+                              src="http://icon.cfcpincc.com:81/1/1/VID_20190411_171417.mp4">
+                       </video>
+
+ 
+
+
+ 
+</body>
+
+
+<script>
+var i=20;
+function first()
+{
+var i=5;
+for(var j=0;j<i;j++)
+{
+document.write("    "+j);
+}
+}
+function second()
+{
+   //获取 上一个搜索页面传来的参数
+            var searchUrl =window.location.href;
+			  alert("searchUrl:"+searchUrl); 
+          //  var searchData1 =searchUrl.split("=");        //截取 url中的“=”,获得“=”后面的参数
+            
+          //  var searchData =searchData1[1].split("&");        //截取 url中的“&”,获得“&”后面的参数
+          
+         //   var  searchText =decodeURI(searchData[0]);   //decodeURI解码
+         //   alert("searchUrl:"+searchUrl); 
+}
+</script>
+ 
+</html>
