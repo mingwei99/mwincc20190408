@@ -7,8 +7,8 @@ import com.cfcp.incc.entity.OrderPriceSystem1;
 import java.util.List;
 import java.util.Map;
 
+// 价格体系 
 public interface OrderPriceSystemDao {
-
     List<OrderPriceSystem> queryAll();
     /*List<OrderPriceSystem> queryAll1_1(Map conditions);*/
     List<OrderPriceSystem> queryAll1();
