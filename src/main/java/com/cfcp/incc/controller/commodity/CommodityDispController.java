@@ -54,7 +54,9 @@ public class CommodityDispController extends BaseController {
         return dictionaryService.dictionariesMap();
     }
 
-
+/*
+扫描 二维码  ：视频 图片 分开显示
+ */
     @RequestMapping(value = "/{commodityId}", method = RequestMethod.GET)
     public String addDistributor(HttpServletResponse response, HttpServletRequest request, @PathVariable String commodityId, Model model){
 //        if (commodityService.save(commodity) > 0 ){
@@ -106,7 +108,5 @@ public class CommodityDispController extends BaseController {
         }
         return ip;
     }
-
-
 
 }
